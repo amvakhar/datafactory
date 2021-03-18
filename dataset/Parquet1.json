@@ -16,7 +16,7 @@
 				},
 				"container": "output"
 			},
-			"compressionCodec": "snappy"
+			"compressionCodec": "none"
 		},
 		"schema": []
 	},
