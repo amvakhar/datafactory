@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@concat('incre',utcnow(),'.txt')",
+					"value": "@concat('incre',utcnow(),'.csv')",
 					"type": "Expression"
 				},
 				"container": "output"
