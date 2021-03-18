@@ -80,20 +80,14 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from dbo.customer1 where lastmodifydate > '@{activity('LkpOldWatermark').output.firstrow.WaterMarkValue}' and  Lastmodifytime <='{@activity('LkpNewWatermarkActivity').output.firstrow.NewWatermark }'",
+							"value": "select customerid,firstname,middlename, lastname, from dbo.customer1 where lastmodifytime> '@{activity('LkpOldWatermark').output.firstRow.WaterMarkValue}' and lastmodifytime <= '@{activity('LkpNewWatermarkActivity').output.firstRow.NewWatermark}'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "ParquetSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "ParquetWriteSettings"
-						}
+						"type": "AzureSqlSink"
 					},
 					"enableStaging": false,
 					"translator": {
@@ -113,7 +107,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Parquet1",
+						"referenceName": "AzureSqlTable2",
 						"type": "DatasetReference"
 					}
 				]
@@ -140,9 +134,9 @@
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[update_watermark]",
 					"storedProcedureParameters": {
-						"lastmodifiedtime": {
+						"lastmodifieddate": {
 							"value": {
-								"value": "@activity('LkpNewWatermarkActivity').output.firstrow.NewWatermark",
+								"value": "@activity('LkpNewWatermarkActivity').output.firstRow.NewWatermark",
 								"type": "Expression"
 							},
 							"type": "Datetime"
